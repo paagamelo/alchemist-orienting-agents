@@ -1,0 +1,45 @@
+@startuml
+
+class GraphEdge<N> {
+  +N from
+  +N to
+}
+
+class GraphEdgeWithData<N, D> {
+  +D data
+}
+
+interface Graph<N, E : GraphEdge<N>> { 
+  +List<N> nodes()
+  +List<E> edgesFrom(N)
+}
+note right: Lists are used to allow predictable iteration order
+
+interface GeometricShape<V : Vector<V>, \nA : GeometricTransformation<V>> {
+  +Double diameter
+  +V centroid
+  +Boolean intersects(GeometricShape<V, A>)
+  +Boolean contains(V)
+  +GeometricShape<V, A> transformed()
+}
+
+interface ConvexGeometricShape<V : Vector<V>, \nA : GeometricTransformation<V>>
+
+interface NavigationGraph<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>> {
+  +List<V> destinations()
+}
+
+
+GraphEdge <|-- GraphEdgeWithData
+
+Graph *-- GraphEdge
+
+interface GeometricShape #white
+
+GeometricShape <|-- ConvexGeometricShape 
+
+Graph <|-- NavigationGraph
+
+NavigationGraph o-- ConvexGeometricShape
+
+@enduml

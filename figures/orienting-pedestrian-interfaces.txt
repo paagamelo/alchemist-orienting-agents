@@ -1,0 +1,48 @@
+@startuml
+
+interface Node<T> #white
+
+interface Pedestrian<T> {
+  +PedestrianGroup<T> membershipGroup
+  +Double speed()
+}
+
+interface CognitiveAgent {
+  +Double dangerBelief()
+  +Double fear()
+  +Double wantsToEvacuate()
+  +List<CognitiveCharacteristic> cognitiveCharacteristics()
+  +List<CognitiveAgent> influencialPeople()
+}
+
+interface Pedestrian #white
+
+interface CognitiveAgent #white
+
+interface CognitivePedestrian<T> #white
+
+Node <|-- Pedestrian
+
+CognitiveAgent <|-- CognitivePedestrian
+
+Pedestrian <|-- CognitivePedestrian
+
+interface OrientingAgent<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>> {
+  +Double knowledgeDegree
+  +NavigationGraph<V, A, N, E> cognitiveMap
+  +Map<N, Int> volatileMemory
+}
+
+interface OrientingPedestrian<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>, \nT>
+
+interface OrientingCognitivePedestrian<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>, \nT>
+
+OrientingAgent <|-- OrientingPedestrian
+
+Pedestrian <|-- OrientingPedestrian
+
+OrientingPedestrian <|-- OrientingCognitivePedestrian
+
+CognitivePedestrian <|-- OrientingCognitivePedestrian
+
+@enduml
