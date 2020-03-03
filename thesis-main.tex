@@ -208,7 +208,7 @@ In questa sezione il sistema di pesi appena descritto viene raffinato ulteriorme
   \end{cases}
  \end{equation}
  Si noti che tale fattore è soggetto alla conoscenza del singolo: \(f_{impasse}\) assume valore massimo solo quando il pedone \emph{sa} che l'arco in esame conduce ad un vicolo cieco. In particolare, in questo caso viene fatto uso della memoria volatile: un arco conducente ad un'area senza uscite viene assegnato peso massimo solo dopo averne fatto esperienza, sarebbe infatti inaccurato impedire che pedoni con scarsa familiarità con l'ambiente incappino in zone di questo tipo. E' invece decisamente più realistico far sì che tali pedoni evitino di visitarle una seconda volta.
- \item \textbf{Evitare la congestione}: La tendenza ad evitare aree congestionate è fondamentale in scenari d'emergenza, in quanto può influire significativamente su tempi e modi di evacuazione. In modo analogo a prima, si può aggiungere un fattore all'\cref{weighting-system} che aumenti il peso degli archi conducenti ad aree congestionate:
+ \item \textbf{Evitare le congestioni}: La tendenza ad evitare aree congestionate è fondamentale in scenari d'emergenza, in quanto può influire significativamente su tempi e modi di evacuazione. In modo analogo a prima, si può aggiungere un fattore all'\cref{weighting-system} che aumenti il peso degli archi conducenti ad aree congestionate:
  \begin{equation}
  f_{congestion} = \frac{occupied\ area}{total\ area} + 1
  \end{equation}
