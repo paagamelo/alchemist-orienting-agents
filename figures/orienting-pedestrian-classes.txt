@@ -7,38 +7,38 @@ interface Pedestrian<T> {
 
 interface Pedestrian #white
 
-interface OrientingPedestrian<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>, \nT>
+interface OrientingPedestrian<T, \nV : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>>
 
 Pedestrian <|-- OrientingPedestrian
 
 class HomogeneousPedestrianImpl<T, P : Position<P>> #white
 
-abstract class AbstractOrientingPedestrian<P : Position<P>, Vector<P>, \nA : GeometricTransformation<P>, \nN1 : ConvexGeometricShape<P, A>, \nE1 : GraphEdge<N1>, \nN2: ConvexGeometricShape<P, A>, \nT> {
-  -NavigationGraph<P, A, N1, E1> envGraph
-  {abstract} #N2 generateLandmarkWithin(N1)
+abstract class AbstractOrientingPedestrian<T, \nP : Position<P>, Vector<P>, \nA : GeometricTransformation<P>, \nN : ConvexGeometricShape<P, A>, \nM: ConvexGeometricShape<P, A>, \nF : GraphEdge<M>> {
+  -NavigationGraph<P, A, M, F> environmentGraph
+  {abstract} #N generateLandmarkWithin(M)
 }
-note left: Contains an algorithm capable of \ngenerating a cognitive map provided \na navigation graph describing the \nenvironment, N1 and E1 are the \ntype of nodes and edges of such \ngraph, respectively. The generation \nof landmarks within walkable areas \nis left to subclasses because it \ndepends on the particular space.
+note left: Contains an algorithm capable of \ngenerating a cognitive map provided \na navigation graph describing the \nenvironment, M and F are the \ntype of nodes and edges of such \ngraph, respectively. The generation \nof landmarks within walkable areas \nis left to subclasses because it \ndepends on the particular space.
 
 Pedestrian <|.. HomogeneousPedestrianImpl
 
-OrientingPedestrian <|.. AbstractOrientingPedestrian : <<bind>> \nV -> P, \nN -> N2, \nE -> GraphEdge<N2>
-note on link: E is bound to GraphEdge<N2> \nbecause the algorithm for \nthe automatic generation of \nthe cognitive map does not \nstore any extra information \nregarding the connection \nbetween landmarks
+OrientingPedestrian <|.. AbstractOrientingPedestrian : <<bind>> \nV -> P, \nE -> GraphEdge<N>
+note on link: E is bound to GraphEdge<N> \nbecause the algorithm for \nthe automatic generation of \nthe cognitive map does not \nstore any extra information \nregarding the connection \nbetween landmarks
 
 HomogeneousPedestrianImpl <|-- AbstractOrientingPedestrian
 
-class OrientingPedestrian2D<N1 : ConvexPolygon, E1 : GraphEdge<N1>, T> {
-  #Ellipse generateLandmarkWithin(N1)
+class OrientingPedestrian2D<T, \nM : ConvexPolygon, \nF : GraphEdge<M>> {
+  #Ellipse generateLandmarkWithin(M)
 }
 
-AbstractOrientingPedestrian <|-- OrientingPedestrian2D : <<bind>> \nV -> Euclidean2DPosition, \nA -> Euclidean2DTransformation, \nN2 -> Ellipse
+AbstractOrientingPedestrian <|-- OrientingPedestrian2D : <<bind>> \nP -> Euclidean2DPosition, \nA -> Euclidean2DTransformation, \nN -> Ellipse
 
-class OrientingHomogeneousPedestrian2D<N1 : ConvexPolygon, E1 : GraphEdge<N1>, T>
+class OrientingHomogeneousPedestrian2D<T, \nM : ConvexPolygon, \nF : GraphEdge<M>>
 
 OrientingPedestrian2D <|-- OrientingHomogeneousPedestrian2D
 
-interface OrientingCognitivePedestrian<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>, \nT>
+interface OrientingCognitivePedestrian<T, \nV : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>>
 
-class OrientingCognitivePedestrian2D<N1 : ConvexPolygon, E1 : GraphEdge<N1>, T>
+class OrientingCognitivePedestrian2D<T, \nM : ConvexPolygon, \nF : GraphEdge<M>>
 
 OrientingPedestrian2D <|-- OrientingCognitivePedestrian2D
 

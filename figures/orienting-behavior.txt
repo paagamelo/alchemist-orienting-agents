@@ -2,24 +2,24 @@
 
 interface Reaction<T> #white
 
-abstract class AbstractOrientingBehavior<P : Position<P>, Vector<P>, \nA : GeometricTransformation<P>, \nN1 : ConvexGeometricShape<P, A>, \nE1 : GraphEdge<N1>, \nN2: ConvexGeometricShape<P, A>, \nE2 : GraphEdge<N2>, \nT> {
-  -NavigationGraph<P, A, N1, E1> envGraph
-  -OrientingPedestrian<P, A, N2, E2, T> pedestrian
-  {abstract} #Map<E1, Int> computeEdgeRankings(currRoom: N1, destination: P)
-  {abstract} #P computeSubdestination(targetEdge: E1)
+abstract class AbstractOrientingBehavior<T, \nP : Position<P>, Vector<P>, \nA : GeometricTransformation<P>, \nN : ConvexGeometricShape<P, A>, \nE : GraphEdge<N>, \nM: ConvexGeometricShape<P, A>, \nF : GraphEdge<M>> {
+  -NavigationGraph<P, A, M, F> environmentGraph
+  -OrientingPedestrian<T, P, A, N, E> pedestrian
+  {abstract} #Map<F, Int> computeEdgeRankings(currRoom: M, destination: P)
+  {abstract} #P computeSubdestination(targetEdge: F)
 }
-note right: N1 and E1 are the types of information stored \nin the envGraph, N2 and E2 the types in the \npedestrian's cognitive map
+note right: N and E are the type of nodes and edges of \nthe pedestrian's cognitive map, M and F the \ntype of nodes and edges of the environment \ngraph
 
-class OrientingBehavior2D<N1 : ConvexPolygon, \nE1 : GraphEdgeWithData<N1, Euclidean2DSegment>, \nN2: ConvexEuclidean2DShape, \nE2 : GraphEdge<N2>, \nT> {
-  #Map<E1, Int> computeEdgeRankings(currRoom: N1, destination: Euclidean2DPosition)
-  #Euclidean2DPosition computeSubdestination(targetEdge: E1)
+class OrientingBehavior2D<T, \nN : ConvexEuclidean2DShape, \nE : GraphEdge<N>, \nM: ConvexPolygon, \nF : GraphEdgeWithData<M, Euclidean2DSegment>> {
+  #Map<F, Int> computeEdgeRankings(currRoom: M, destination: Euclidean2DPosition)
+  #Euclidean2DPosition computeSubdestination(targetEdge: F)
 }
 
 Reaction <|.. AbstractOrientingBehavior
 
 AbstractOrientingBehavior <|-- OrientingBehavior2D : <<bind>> \nP -> Euclidean2DPosition, \nA -> Euclidean2DTransformation
 
-class OrientingSteeringBehavior2D<N1 : ConvexPolygon, \nE1 : GraphEdgeWithData<N1, Euclidean2DSegment>, \nN2: ConvexEuclidean2DShape, \nE2 : GraphEdge<N2>, \nT> {
+class OrientingSteeringBehavior2D<T, \nN : ConvexEuclidean2DShape, \nE : GraphEdge<N>, \nM: ConvexPolygon, \nF : GraphEdgeWithData<M, Euclidean2DSegment>> {
   -List<SteeringAction> steerActions
 }
 note right: Mixes steering behavior and orienting \nbehavior smartly

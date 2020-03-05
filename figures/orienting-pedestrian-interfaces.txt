@@ -30,12 +30,12 @@ Pedestrian <|-- CognitivePedestrian
 interface OrientingAgent<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>> {
   +Double knowledgeDegree
   +NavigationGraph<V, A, N, E> cognitiveMap
-  +Map<N, Int> volatileMemory
+  +MutableMap<in ConvexGeometricShape<V, A>, Int> volatileMemory
 }
 
-interface OrientingPedestrian<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>, \nT>
+interface OrientingPedestrian<T, \nV : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>>
 
-interface OrientingCognitivePedestrian<V : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>, \nT>
+interface OrientingCognitivePedestrian<T, \nV : Vector<V>, \nA : GeometricTransformation<V>, \nN : ConvexGeometricShape<V, A>, \nE : GraphEdge<N>>
 
 OrientingAgent <|-- OrientingPedestrian
 

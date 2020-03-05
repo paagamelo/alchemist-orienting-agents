@@ -1,8 +1,8 @@
 @startuml
 
 class GraphEdge<N> {
-  +N from
-  +N to
+  +N tail
+  +N head
 }
 
 class GraphEdgeWithData<N, D> {
